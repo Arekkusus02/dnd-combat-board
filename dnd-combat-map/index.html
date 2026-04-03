@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>D&D Combat Board</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LEGEND CONTAINER -->
+<div id="legend">
+  <h3>Legend</h3>
+  
+  <!-- Grid Length Section -->
+  <div class="legendSection">
+    <label>Grid Length (ft):</label>
+    <input id="gridLengthInput" type="number" value="20" min="1">
+    <button id="editGridLength">Edit</button>
+  </div>
+  
+  <!-- Grid Height Section -->
+  <div class="legendSection">
+    <label>Grid Height (ft):</label>
+    <input id="gridHeightInput" type="number" value="20" min="1">
+    <button id="editGridHeight">Edit</button>
+  </div>
+  
+  <!-- Controls Section -->
+  <div class="legendSection">
+    <h4>Controls:</h4>
+    <ul>
+      <li><b>Delete Token:</b> Right-click + Shift</li>
+      <li><b>Drag Token:</b> Left-click and drag</li>
+      <li><b>Rotate Token:</b> Right-click</li>
+      <li><b>Edit Conditions:</b> Double-click</li>
+    </ul>
+  </div>
+</div>
+
+<div id="container">
+
+  <!-- TOOLTIP BOX -->
+  <div id="tooltip">No combat started</div>
+
+  <!-- LEFT: TOKENS WINDOW -->
+  <div id="tokensPanel">
+    <h3>Tokens</h3>
+    <div id="tokensList"></div>
+  </div>
+
+  <!-- CENTER: GRID -->
+  <canvas id="board"></canvas>
+
+  <!-- RIGHT: INITIATIVE -->
+  <div id="initiativePanel">
+    <h3>Initiative</h3>
+    <div id="initiativeList"></div>
+    <button id="nextTurn">Next Turn</button>
+    <canvas id="dice" width="80" height="80"></canvas>
+  </div>
+
+</div>
+
+<!-- TOKEN CREATOR -->
+<div id="controls">
+  <input id="tokenName" placeholder="Name">
+  <input id="tokenColor" type="color">
+  <input id="tokenBonus" type="number" placeholder="Init Bonus">
+  <button id="addToken">Add Token</button>
+
+  <div id="movementInfo">0 ft</div>
+  <button id="resetMove">Go Back</button>
+  <button id="resetAllMove">All Back</button>
+</div>
+
+<!-- COMBAT CONTROLS -->
+<div id="combatControls">
+  <button id="initiativeRoll">Initiative Roll</button>
+  <button id="startCombat">Start Combat</button>
+  <button id="finishCombat">Finish Combat</button>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

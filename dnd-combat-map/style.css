@@ -1,0 +1,150 @@
+/*PAGE */
+body {
+  margin: 0;
+  background: #d3d3d3; /* light grey */
+  font-family: Arial;
+}
+
+/* LEGEND CONTAINER */
+#legend {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 250px;
+  background: #d3d3d3;
+  border: 10px solid white;
+  padding: 15px;
+  max-height: 400px;
+  overflow-y: auto;
+  font-size: 12px;
+}
+
+#legend h3 {
+  margin-top: 0;
+  border-bottom: 2px solid black;
+  padding-bottom: 5px;
+}
+
+#legend h4 {
+  margin: 10px 0 5px 0;
+}
+
+.legendSection {
+  margin-bottom: 15px;
+}
+
+.legendSection label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.legendSection input {
+  width: 60px;
+  padding: 3px;
+  margin-right: 5px;
+}
+
+.legendSection button {
+  padding: 3px 8px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.legendSection button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.legendSection ul {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 11px;
+}
+
+.legendSection li {
+  margin: 3px 0;
+}
+
+/*MAIN LAYOUT */
+#container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  gap: 20px;
+}
+
+/*GRID */
+#board {
+  background: #d3d3d3;
+  border: 2px solid black;
+}
+
+/*TOKENS PANEL */
+#tokensPanel {
+  width: 200px;
+  height: 400px;
+  background: #d3d3d3;
+  border: 10px solid white;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+/*🎲INITIATIVE PANEL */
+#initiativePanel {
+  width: 200px;
+}
+
+/*INITIATIVE TABLE STYLE */
+#initiativeList {
+  border: 4px solid black;
+  background: #d3d3d3;
+}
+
+.initiativeRow {
+  border-bottom: 4px solid black;
+  padding: 5px;
+}
+
+/* 🔴CURRENT TURN */
+.currentTurn {
+  background: #ffcccc; /* light red */
+}
+
+/*TOKEN LIST */
+.tokenItem {
+  margin: 5px 0;
+}
+
+/* CONTROLS (bottom) */
+#controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  margin-left: 480px;
+  width: 800px;
+}
+
+/* COMBAT CONTROLS (right side) */
+#combatControls {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+/*TOOLTIP */
+#tooltip {
+  width: 200px;
+  height: 400px;
+  background: #d3d3d3;
+  border: 10px solid white;
+  padding: 10px;
+  margin-right: 5px;
+  font-family: monospace;
+  font-size: 14px;
+  overflow-y: auto;
+}
