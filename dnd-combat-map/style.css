@@ -25,8 +25,69 @@ body {
   padding-bottom: 5px;
 }
 
+#legend.collapsed h3 {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
 #legend h4 {
   margin: 10px 0 5px 0;
+}
+
+.legendHeader {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#toggleLegend {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: #444;
+  color: white;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 0 4px 0 0;
+}
+
+#toggleLegend:hover {
+  background: #333;
+}
+
+#legend.collapsed {
+  max-height: 50px;
+  width: 250px;
+  padding: 10px 12px 0 12px;
+  overflow: hidden;
+  background: rgba(211, 211, 211, 0.95);
+  border: 10px solid white;
+  border-bottom-color: transparent;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+#legend.collapsed .legendHeader {
+  margin-bottom: 0;
+}
+
+#legend.collapsed #legendContent {
+  display: none;
+}
+
+#legend.collapsed #toggleLegend {
+  border-radius: 0 4px 0 0;
+  background: #444;
+  color: white;
+}
+
+#legendContent {
+  transition: max-height 0.2s ease-in-out;
 }
 
 .legendSection {

@@ -8,11 +8,14 @@
 
 <!-- LEGEND CONTAINER -->
 <div id="legend">
-  <h3>Legend</h3>
-  
-  <!-- Grid Length Section -->
-  <div class="legendSection">
-    <label>Grid Length (ft):</label>
+  <div class="legendHeader">
+    <h3>Legend</h3>
+    <button id="toggleLegend" aria-expanded="true" aria-label="Toggle legend">−</button>
+  </div>
+  <div id="legendContent">
+    <!-- Grid Length Section -->
+    <div class="legendSection">
+      <label>Grid Length (ft):</label>
     <input id="gridLengthInput" type="number" value="20" min="1">
     <button id="editGridLength">Edit</button>
   </div>
@@ -33,6 +36,7 @@
       <li><b>Rotate Token:</b> Right-click</li>
       <li><b>Edit Conditions:</b> Double-click</li>
     </ul>
+  </div>
   </div>
 </div>
 

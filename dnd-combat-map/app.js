@@ -279,12 +279,22 @@ finishCombat.onclick = () => {
     return;
   }
 
+  // Restore tokens that existed when combat started
+  state.tokens.forEach(token => {
+    const startPos = state.combatStartPositions[token.id];
+    if (startPos) {
+      token.x = startPos.x;
+      token.y = startPos.y;
+    }
+  });
+
   state.combatStarted = false;
   state.currentTurn = 0;
   state.movement.used = 0;
   state.movement.activeTokenId = null;
   state.initiative = [];
   state.settledDiceRoll = null;
+  state.combatStartPositions = {};
   render();
 };
 
@@ -401,6 +411,7 @@ function drawSight(token) {
   const cx = token.x * size + size / 2;
   const cy = token.y * size + size / 2;
 
+  ctx.save();
   ctx.beginPath();
   ctx.moveTo(cx, cy);
 
@@ -412,8 +423,10 @@ function drawSight(token) {
     token.direction + Math.PI / 3
   );
 
-  ctx.fillStyle = "rgba(0,255,0,0.2)";
+  ctx.fillStyle = token.color;
+  ctx.globalAlpha = 0.2;
   ctx.fill();
+  ctx.restore();
 }
 
 canvas.addEventListener("contextmenu", (e) => {
@@ -532,9 +545,27 @@ function updateTooltip() {
   const activeToken = state.tokens.find(t => t.id === activeId);
 
   const turnText = `Turn ${state.currentTurn + 1}/${state.initiative.length}`;
-  const activeText = activeToken ? `Active: ${activeToken.name}` : "No active token";
+  const movedText = `Moved: ${state.movement.used} ft`;
 
-  tooltip.innerText = `${turnText} | ${activeText} | Moved: ${state.movement.used} ft`;
+  if (!activeToken) {
+    tooltip.innerText = `${turnText} | No active token | ${movedText}`;
+    return;
+  }
+
+  tooltip.innerHTML = "";
+  const turnSpan = document.createElement("span");
+  turnSpan.textContent = `${turnText} | `;
+
+  const activeSpan = document.createElement("span");
+  activeSpan.textContent = `Active: ${activeToken.name}`;
+  activeSpan.style.color = activeToken.color;
+
+  const movedSpan = document.createElement("span");
+  movedSpan.textContent = ` | ${movedText}`;
+
+  tooltip.appendChild(turnSpan);
+  tooltip.appendChild(activeSpan);
+  tooltip.appendChild(movedSpan);
 }
 
 function render() {
@@ -550,6 +581,19 @@ function render() {
 
   movementInfo.innerText = state.movement.used + " ft";
 }
+
+const toggleLegend = document.getElementById("toggleLegend");
+const legend = document.getElementById("legend");
+
+function setLegendCollapsed(collapsed) {
+  legend.classList.toggle("collapsed", collapsed);
+  toggleLegend.textContent = collapsed ? "+" : "−";
+  toggleLegend.setAttribute("aria-expanded", String(!collapsed));
+}
+
+toggleLegend.onclick = () => {
+  setLegendCollapsed(!legend.classList.contains("collapsed"));
+};
 
 render();
 
