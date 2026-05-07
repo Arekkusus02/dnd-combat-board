@@ -169,13 +169,13 @@
     <div class="inventory-section">
       <h4>Equipment</h4>
       <ul id="allEquipmentList"></ul>
-      <input id="allEquipmentInput" placeholder="Add to all">
+      <input id="allEquipmentInput" list="itemNameOptions" placeholder="Add to all">
       <button id="addAllEquipment">Add to All</button>
     </div>
     <div class="inventory-section">
       <h4>Inventory</h4>
       <ul id="allInventoryList"></ul>
-      <input id="allInventoryInput" placeholder="Add to all">
+      <input id="allInventoryInput" list="itemNameOptions" placeholder="Add to all">
       <button id="addAllInventory">Add to All</button>
     </div>
     <div class="inventory-section">
@@ -212,7 +212,7 @@
   <div class="modal-content inventory-modal">
     <h3>Tutorial</h3>
     <div class="inventory-section">
-      <p>Welcome to the D&D Combat Board. This tool lets you manage a grid-based combat map, tokens, initiative, objects, and character inventories.</p>
+      <p>Welcome to the D&D Combat Board. This tool lets you manage a grid-based combat map, tokens, initiative, objects, and character inventories. There are even waypoints here, but if you don't use them, dont concern yourself with the button.</p>
       <h4>Main features</h4>
       <ul>
         <li>Place, move, rotate, and delete tokens on the grid.</li>
@@ -220,6 +220,11 @@
         <li>Create objects with presets, color, shape, and size.</li>
         <li>Use the inventory system for characters, equipment, item counts, and gold.</li>
         <li>Use the Items page as a central allowed-item storage.</li>
+        <li>Manage your party's xp and insight. Used for counting only, and if you use the xp system for level up. The insight is more of a story thing, don't pay it much attention.</li>
+        <li>View all characters' inventories in one place.</li>
+        <li>Manage character names and colors.</li>
+        <li>Export and import character inventories.</li>
+        <li>Manage waypoints for character movement. Mostly just to show the teleport options.</li>
       </ul>
       <h4>How it connects</h4>
       <ul>
@@ -228,12 +233,29 @@
         <li>The Items modal defines what item names can be added to characters.</li>
         <li>The All Characters Inventory modal shows shared items and total gold for all characters.</li>
         <li>Export/import keeps inventory data backed up, while browser storage preserves it automatically.</li>
+        <li>The Object Manager modal lets you create and manage objects.</li>
+        <li>The Waypoints modal lets you manage waypoints for character movement.</li>
+        <li>In the inventory modal, party wise xp and insight are tracked.</li>
       </ul>
       <h4>Controls</h4>
       <ul>
         <li><strong>Legend</strong> is always visible in compact form when minimized.</li>
         <li><strong>Tutorial</strong> opens this guide from the legend header.</li>
         <li><strong>ESC</strong> closes any open modal.</li>
+        <li><strong>Delete Token:</strong> Right-click + Shift</li>
+        <li><strong>Drag Token:</strong> Left-click and drag</li>
+        <li><strong>Rotate Token:</strong> Right-click</li>
+        <li><strong>Edit Conditions:</strong> Double-click</li>
+        <li><strong>Initiative Roll:</strong> Reroll the initiative order</li>
+        <li><strong>Next Turn:</strong> Progress initiative to the next token</li>
+        <li><strong>Go Back:</strong> Return the Token to its previous position - 0ft movement</li>
+        <li><strong>All Back:</strong> Return all Tokens to their original position - 0ft movement</li>
+        <li><strong>Inventory:</strong> Opens Inventory modal</li>
+        <li><strong>Characters:</strong> Manages characters</li>
+        <li><strong>View all:</strong> Opens All Characters Inventory modal</li>
+        <li><strong>Items:</strong> Opens Item Manager modal</li>
+        <li><strong>Objects:</strong> Opens Object Manager modal</li>
+        <li><strong>Waypoints:</strong> Opens Waypoints modal</li>
       </ul>
     </div>
     <button id="closeTutorial">Close</button>

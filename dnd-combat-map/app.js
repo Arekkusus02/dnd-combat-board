@@ -903,6 +903,7 @@ if (closeCharactersModalbtn) {
 const viewAllbtn = document.getElementById("viewAll");
 if (viewAllbtn) {
   viewAllbtn.onclick = () => {
+  populateItemNameSuggestions();
   document.getElementById("inventoryModal").style.display = "none";
   document.getElementById("viewAllModal").style.display = "block";
   loadAllCharactersInventory();
