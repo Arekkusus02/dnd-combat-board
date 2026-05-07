@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>D&D Combat Board</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LEGEND CONTAINER -->
+<div id="legend">
+  <div class="legendHeader">
+    <h3>Legend</h3>
+    <button id="tutorialButton" aria-label="Tutorial" title="Tutorial"><canvas id="tutorialCanvas" width="20" height="20"></canvas></button>
+    <button id="toggleLegend" aria-expanded="true" aria-label="Toggle legend">−</button>
+  </div>
+  <div id="legendContent">
+    <!-- Grid Length Section -->
+    <div class="legendSection">
+      <label>Grid Length (ft):</label>
+    <input id="gridLengthInput" type="number" value="20" min="1">
+    <button id="editGridLength">Edit</button>
+  </div>
+  
+  <!-- Grid Height Section -->
+  <div class="legendSection">
+    <label>Grid Height (ft):</label>
+    <input id="gridHeightInput" type="number" value="20" min="1">
+    <button id="editGridHeight">Edit</button>
+  </div>
+  
+  <!-- Controls Section -->
+  <div class="legendSection">
+    <h4>Controls:</h4>
+    <ul>
+      <li><b>Delete Token:</b> Right-click + Shift</li>
+      <li><b>Drag Token:</b> Left-click and drag</li>
+      <li><b>Rotate Token:</b> Right-click</li>
+      <li><b>Edit Conditions:</b> Double-click</li>
+    </ul>
+  </div>
+  </div>
+</div>
+
+<div id="container">
+
+  <!-- TOOLTIP BOX -->
+  <div id="tooltip">No combat started</div>
+
+  <!-- LEFT: TOKENS WINDOW -->
+  <div id="tokensPanel">
+    <h3>Tokens</h3>
+    <div id="tokensList"></div>
+  </div>
+
+  <!-- CENTER: GRID -->
+  <canvas id="board"></canvas>
+
+  <!-- RIGHT: INITIATIVE -->
+  <div id="initiativePanel">
+    <h3>Initiative</h3>
+    <div id="initiativeList"></div>
+    <button id="nextTurn">Next Turn</button>
+    <canvas id="dice" width="80" height="80"></canvas>
+  </div>
+
+</div>
+
+<!-- TOKEN CREATOR -->
+<div id="controls">
+  <input id="tokenName" placeholder="Name">
+  <label>Size:
+    <select id="tokenSize">
+      <option value="small">small</option>
+      <option value="default">default</option>
+      <option value="fat">fat</option>
+      <option value="fat+">fat+</option>
+    </select>
+  </label>
+  <input id="tokenColor" type="color">
+  <input id="tokenBonus" type="number" placeholder="Init Bonus">
+  <button id="addToken">Add Token</button>
+  <button id="addObject">Add Object</button>
+
+  <div id="movementInfo">0 ft</div>
+  <button id="resetMove">Go Back</button>
+  <button id="resetAllMove">All Back</button>
+</div>
+
+<!-- COMBAT CONTROLS -->
+<div id="combatControls">
+  <button id="initiativeRoll">Initiative Roll</button>
+  <button id="waypoints">Waypoints</button>
+  <button id="startCombat">Start Combat</button>
+  <button id="finishCombat">Finish Combat</button>
+  <button id="inventory">Inventory</button>
+</div>
+
+<!-- INVENTORY MODAL -->
+<div id="inventoryModal" class="modal">
+  <div class="modal-content inventory-modal-large">
+    <div class="inventory-header">
+      <h3>Inventory</h3>
+      <div class="inventory-buttons">
+
+        <!-- <label for="characterSelect">Character:</label>
+        <select id="characterSelect">
+        <option value="">-- Select Character --</option>
+        </select> -->
+
+        <label>Insight: <input type="number" id="insightCounter" min="0" step="1" value="0"></label>
+        <label>XP: <input type="number" id="xpCounter" min="0" step="1" value="0"></label>
+        <button id="charactersMgmt">Characters</button>
+        <button id="viewAll">View All</button>
+        <button id="itemsManager">Items</button>
+        <button id="exportInventory">Export</button>
+        <button id="importInventory">Import</button>
+        <input type="file" id="importFile" accept=".json" style="display: none;">
+        <button id="closeInventory">Close</button>
+      </div>
+    </div>
+    <div id="characterBoxesContainer" class="character-boxes-grid"></div>
+  </div>
+</div>
+
+<!-- CHARACTERS MANAGEMENT MODAL -->
+<div id="charactersModal" class="modal">
+  <div class="modal-content inventory-modal">
+    <h3>Characters</h3>
+    <div id="charactersList" class="character-list"></div>
+    <button id="addCharacterBtn">Add Character</button>
+    <button id="backFromCharacters">Back</button>
+    <button id="closeCharactersModal">Close</button>
+  </div>
+</div>
+
+<!-- CHARACTER DETAIL MODAL -->
+<div id="characterDetailModal" class="modal">
+  <div class="modal-content inventory-modal">
+    <h3 id="characterDetailName">Character Name</h3>
+    <div class="inventory-section">
+      <h4>Equipment</h4>
+      <ul id="detailEquipmentList"></ul>
+      <input id="detailEquipmentInput" class="dropdown-input" list="itemNameOptions" placeholder="Add equipment">
+      <button id="detailAddEquipment">Add</button>
+    </div>
+    <div class="inventory-section">
+      <h4>Inventory</h4>
+      <ul id="detailInventoryList"></ul>
+      <input id="detailInventoryInput" class="dropdown-input" list="itemNameOptions" placeholder="Add item">
+      <button id="detailAddInventory">Add</button>
+    </div>
+    <datalist id="itemNameOptions"></datalist>
+    <div class="inventory-section">
+      <h4>Gold</h4>
+      <p id="detailGoldAmount">0 gp</p>
+      <input id="detailGoldInput" type="number" placeholder="Add/subtract gold">
+      <button id="detailAddGold">Add</button>
+      <button id="detailSubtractGold">Subtract</button>
+    </div>
+    <button id="backFromCharacterDetail">Back</button>
+    <button id="closeCharacterDetailModal">Close</button>
+  </div>
+</div>
+
+<!-- VIEW ALL MODAL -->
+<div id="viewAllModal" class="modal">
+  <div class="modal-content inventory-modal">
+    <h3>All Characters Inventory</h3>
+    <div class="inventory-section">
+      <h4>Equipment</h4>
+      <ul id="allEquipmentList"></ul>
+      <input id="allEquipmentInput" placeholder="Add to all">
+      <button id="addAllEquipment">Add to All</button>
+    </div>
+    <div class="inventory-section">
+      <h4>Inventory</h4>
+      <ul id="allInventoryList"></ul>
+      <input id="allInventoryInput" placeholder="Add to all">
+      <button id="addAllInventory">Add to All</button>
+    </div>
+    <div class="inventory-section">
+      <h4>Gold</h4>
+      <p id="allGoldAmount">0 gp total</p>
+      <input id="allGoldInput" type="number" placeholder="Add/subtract from all">
+      <button id="addAllGold">Add to All</button>
+      <button id="subtractAllGold">Subtract from All</button>
+    </div>
+    <button id="backToInventory">Back</button>
+    <button id="closeViewAll">Close</button>
+  </div>
+</div>
+<div id="itemManagerModal" class="modal">
+  <div class="modal-content inventory-modal">
+    <h3>Item Manager</h3>
+    <div class="inventory-section">
+      <h4>Items</h4>
+      <ul id="itemManagerList"></ul>
+    </div>
+    <div class="inventory-section">
+      <h4>Add / Edit Item</h4>
+      <input id="itemNameInput" placeholder="Item name">
+      <textarea id="itemDescriptionInput" placeholder="Item description" rows="4"></textarea>
+      <button id="saveItem">Add Item</button>
+      <button id="cancelItemEdit" style="display: none;">Cancel</button>
+    </div>
+    <button id="backFromItems">Back</button>
+    <button id="closeItemManager">Close</button>
+  </div>
+</div>
+<!-- TUTORIAL MODAL -->
+<div id="tutorialModal" class="modal">
+  <div class="modal-content inventory-modal">
+    <h3>Tutorial</h3>
+    <div class="inventory-section">
+      <p>Welcome to the D&D Combat Board. This tool lets you manage a grid-based combat map, tokens, initiative, objects, and character inventories.</p>
+      <h4>Main features</h4>
+      <ul>
+        <li>Place, move, rotate, and delete tokens on the grid.</li>
+        <li>Track initiative order and turn progression.</li>
+        <li>Create objects with presets, color, shape, and size.</li>
+        <li>Use the inventory system for characters, equipment, item counts, and gold.</li>
+        <li>Use the Items page as a central allowed-item storage.</li>
+      </ul>
+      <h4>How it connects</h4>
+      <ul>
+        <li>The legend contains controls for grid settings and quick reference.</li>
+        <li>The Inventory modal manages each character's items and gold.</li>
+        <li>The Items modal defines what item names can be added to characters.</li>
+        <li>The All Characters Inventory modal shows shared items and total gold for all characters.</li>
+        <li>Export/import keeps inventory data backed up, while browser storage preserves it automatically.</li>
+      </ul>
+      <h4>Controls</h4>
+      <ul>
+        <li><strong>Legend</strong> is always visible in compact form when minimized.</li>
+        <li><strong>Tutorial</strong> opens this guide from the legend header.</li>
+        <li><strong>ESC</strong> closes any open modal.</li>
+      </ul>
+    </div>
+    <button id="closeTutorial">Close</button>
+  </div>
+</div>
+<!-- OBJECT CREATION MODAL -->
+<div id="objectModal" class="modal">
+  <div class="modal-content">
+    <h3>Create Object</h3>
+    <label>Preset:
+      <select id="objectPreset">
+        <option value="">-- Custom --</option>
+      </select>
+    </label>
+    <button id="saveAsPreset" style="margin-left: 5px;">Save</button>
+    <button id="removePreset" style="margin-left: 5px;">Remove</button><br><br>
+    <label>Name: <input id="objectName" type="text"></label><br>
+    <label>Color: <input id="objectColor" type="color"></label><br>
+    <label>Size:
+      <select id="objectSize">
+        <option value="small">Small (1/4)</option>
+        <option value="medium">Medium (1/2)</option>
+        <option value="big">Big (1/1)</option>
+      </select>
+    </label><br>
+    <label>Form:
+      <select id="objectForm">
+        <option value="circle">Circle</option>
+        <option value="square">Square</option>
+        <option value="triangle">Triangle</option>
+        <option value="horizontalStripes">Horizontal Stripes</option>
+        <option value="verticalStripes">Vertical Stripes</option>
+        <option value="diagonalStripesRight">Diagonal Stripes Right</option>
+        <option value="diagonalStripesLeft">Diagonal Stripes Left</option>
+        <option value="wavy">Wavy</option>
+      </select>
+    </label><br>
+    <button id="createObject">Create</button>
+    <button id="cancelObject">Cancel</button>
+  </div>
+</div>
+
+<!-- WAYPOINTS MODAL -->
+<div id="waypointsModal" class="modal">
+  <div class="modal-content inventory-modal">
+    <h3>Waypoints</h3>
+    <div class="inventory-section">
+      <h4>Waypoint List</h4>
+      <ul id="waypointsList"></ul>
+    </div>
+    <div class="inventory-section">
+      <h4>Add Waypoint</h4>
+      <input id="waypointNameInput" placeholder="Waypoint name">
+      <textarea id="waypointDescriptionInput" placeholder="Waypoint description" rows="3"></textarea>
+      <button id="addWaypoint">Add Waypoint</button>
+    </div>
+    <button id="closeWaypoints">Close</button>
+  </div>
+</div>
+
+<script src="app.js" defer></script>
+</body>
+</html>

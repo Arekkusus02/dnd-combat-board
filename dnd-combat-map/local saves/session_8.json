@@ -1,0 +1,403 @@
+{
+  "version": 1,
+  "exportedAt": 1778119486504,
+  "inventory": {
+    "Robbit": {
+      "equipment": [
+        {
+          "name": "shadow shard",
+          "count": 1
+        }
+      ],
+      "inventory": [
+        {
+          "name": "kana carrot juice",
+          "count": 1
+        },
+        {
+          "name": "meat skewer",
+          "count": 6
+        },
+        {
+          "name": "raw meat",
+          "count": 3
+        },
+        {
+          "name": "mushroom",
+          "count": 3
+        },
+        {
+          "name": "raw egg",
+          "count": 1
+        },
+        {
+          "name": "hot pot with veggies and pork",
+          "count": 1
+        },
+        {
+          "name": "cooked  egg",
+          "count": 1
+        }
+      ],
+      "gold": 395
+    },
+    "Eric": {
+      "equipment": [
+        {
+          "name": "poison dagger",
+          "count": 1
+        },
+        {
+          "name": "shadow shard",
+          "count": 1
+        }
+      ],
+      "inventory": [
+        {
+          "name": "bottle wine",
+          "count": 1
+        }
+      ],
+      "gold": 310
+    },
+    "Don Key": {
+      "equipment": [
+        {
+          "name": "healing stone",
+          "count": 1
+        },
+        {
+          "name": "shadow shard",
+          "count": 1
+        }
+      ],
+      "inventory": [
+        {
+          "name": "meat skewer",
+          "count": 4
+        },
+        {
+          "name": "cooked mushroom",
+          "count": 1
+        },
+        {
+          "name": "raw meat",
+          "count": 2
+        },
+        {
+          "name": "mushroom",
+          "count": 1
+        },
+        {
+          "name": "bottle whiskey",
+          "count": 1
+        }
+      ],
+      "gold": 420
+    },
+    "Haraki": {
+      "equipment": [
+        {
+          "name": "healing stone",
+          "count": 1
+        },
+        {
+          "name": "shadow shard",
+          "count": 1
+        }
+      ],
+      "inventory": [
+        {
+          "name": "salt water barrel",
+          "count": 1
+        },
+        {
+          "name": "meat skewer",
+          "count": 2
+        },
+        {
+          "name": "raw meat",
+          "count": 1
+        }
+      ],
+      "gold": 390
+    },
+    "Astolfo": {
+      "equipment": [
+        {
+          "name": "shadow shard",
+          "count": 1
+        }
+      ],
+      "inventory": [
+        {
+          "name": "raw meat",
+          "count": 11
+        },
+        {
+          "name": "mushroom",
+          "count": 11
+        },
+        {
+          "name": "raw egg",
+          "count": 4
+        },
+        {
+          "name": "cooked  egg",
+          "count": 4
+        }
+      ],
+      "gold": 385
+    }
+  },
+  "itemDefinitions": [
+    {
+      "id": "483a706d-4bee-45e4-90c5-c997c9c4c74e",
+      "name": "kana carrot juice",
+      "description": "sell-200g\na drink received from a bar from the outside, a reward for a good deed. just a kana carrot juice"
+    },
+    {
+      "id": "4db76f63-8d31-460b-b49e-f0abdd0fba64",
+      "name": "bottle whiskey",
+      "description": "sell-200g\na drink received from a bar from the outside, a reward for a good deed. normal whiskey. consumable"
+    },
+    {
+      "id": "d6abb205-7b94-4b01-b6d6-a697226a5bc3",
+      "name": "bottle wine",
+      "description": "sell-200g\na drink received from a bar from the outside, a reward for a good deed. plain wine"
+    },
+    {
+      "id": "ebaed41f-b089-4718-8d2d-b542d856902e",
+      "name": "salt water barrel",
+      "description": "sell-200g\na drink received from a bar from the outside, a reward for a good deed. salt water 30/70"
+    },
+    {
+      "id": "898e6f2a-0385-45ad-920c-a98444541230",
+      "name": "poison dagger",
+      "description": "buy-750g, sell-400g\na dagger with a poison tip. it will poison the target, dealing aditional dmg. the poison from the tip is consumable, making the dagger useless after 1 usage."
+    },
+    {
+      "id": "b2772d71-313a-4946-bd8a-4276f41008c9",
+      "name": "empty bottle",
+      "description": "buy-0g, sell-0g (unoptainable by shop)\nan empty bottle. it is whole, without any damage on it, looks like it is durable enough to hold liquid for long period, but isn't really big."
+    },
+    {
+      "id": "c2bc17ae-4028-43bb-9a79-092f5b6e64be",
+      "name": "mushroom",
+      "description": "buy-20g, sell-12g\nplain ol mushroom"
+    },
+    {
+      "id": "eebac9b6-8bed-492b-827f-5892e089c675",
+      "name": "cooked mushroom",
+      "description": "buy-70g, sell-50g\neasy to make food. it's just a mushroom bro..."
+    },
+    {
+      "id": "6a953857-ba75-4a42-94a9-de7d015d9da7",
+      "name": "ale",
+      "description": "buy-500g, sell-270g\nbubbly and tasty"
+    },
+    {
+      "id": "510c4e9a-8487-4acd-a156-942aee480d3d",
+      "name": "sausages",
+      "description": "buy-20g, sell-12g\nnot really good looking, might be rotten"
+    },
+    {
+      "id": "9144eb05-dcd4-4ce1-a9d2-6200760024d9",
+      "name": "roasted chicken wings",
+      "description": "buy-30g, sell-14g\nnicely cooked wing"
+    },
+    {
+      "id": "b2ce7241-da1f-44a8-82cf-a9b278d17fb6",
+      "name": "roasted chicken legs",
+      "description": "buy-30g, sell-14g\nnicely cooked chicken leg"
+    },
+    {
+      "id": "6ea3c669-53cd-4a09-b5ea-7a17cd52e42a",
+      "name": "roasted fish",
+      "description": "buy-25g, sell-13g\nnicely cooked salmon"
+    },
+    {
+      "id": "2df86aee-ff09-455c-9a6b-92049996b49d",
+      "name": "baked potatoes",
+      "description": "buy-50g, sell-28g\nplain potatoes"
+    },
+    {
+      "id": "0314d0af-5c81-4d6a-bb86-13fed1280e26",
+      "name": "green salad",
+      "description": "buy-50g, sell-28g\nplain green salad"
+    },
+    {
+      "id": "ff025b44-b66c-451a-8ffd-84e494319806",
+      "name": "roasted pork",
+      "description": "buy-400g, sell-220g\nyes, a whole pig"
+    },
+    {
+      "id": "dddf760e-6345-416d-81e2-ababfe026dbe",
+      "name": "pork stew",
+      "description": "buy-100g, sell-55g\nnice and warm"
+    },
+    {
+      "id": "694976b5-5ab3-4290-953a-d88e22f73180",
+      "name": "hot pot with veggies and pork",
+      "description": "buy-1000g, sell-650g\na big pot, there's enough for everyone"
+    },
+    {
+      "id": "8820f3a3-000f-405f-906a-dfad40eaa54d",
+      "name": "raw egg",
+      "description": "buy-20g, sell-12g\ndefinitely not from around these lands"
+    },
+    {
+      "id": "6b4d264f-e31f-441c-86eb-0eee09720655",
+      "name": "cooked  egg",
+      "description": "buy-50, sell-28g\njust a normally cooked egg"
+    },
+    {
+      "id": "f9ed92d1-7472-4281-95d8-896873563937",
+      "name": "raw meat",
+      "description": "buy-100g , sell-60g\nmeat from a wild animal, even the shadow curse can't fully mutate them, or can it?"
+    },
+    {
+      "id": "56788940-3285-401d-a3ef-6489c0e489a4",
+      "name": "cooked meat",
+      "description": "buy-150g, sell-100g\nnicely cooked meat"
+    },
+    {
+      "id": "f8206f31-b582-4390-815a-407c842897fc",
+      "name": "meat skewer",
+      "description": "buy-200g, sell-110g\na skewer, made only with meat\n[1d6 temp health]"
+    },
+    {
+      "id": "3e104bd4-e2a2-418c-abd8-0205af5b1c74",
+      "name": "veggie skewer",
+      "description": "buy-200g, sell-110g\na skewer, made only with veggies"
+    },
+    {
+      "id": "685aa5f0-8251-4715-beab-6fe5d0916ef1",
+      "name": "meat and veggie skewer",
+      "description": "buy-350g, sell-200g\na skewer, made from both meat and veggies, combo"
+    },
+    {
+      "id": "981f30c2-402a-4ace-bdb9-47b185e009ba",
+      "name": "shadow shard",
+      "description": "can be given or sold to the merchant for 500g \na strange shard. [giving it to the merchant, gives you a healing stone] []"
+    },
+    {
+      "id": "a4dd9a3e-b339-4366-a71f-93ce359c40ae",
+      "name": "healing stone",
+      "description": "buy-0g, sell-800g\ncrafted by the merchant if you give him 3 shadow shards []"
+    },
+    {
+      "id": "fb4fc8d5-4329-45dc-baa2-71c1607b71e7",
+      "name": "weapon sharpener stone",
+      "description": "buy-5000g, sell-3500g\na stone that can be used to refine your weapon"
+    }
+  ],
+  "counters": {
+    "insight": 1,
+    "xp": 960
+  },
+  "waypoints": [
+    {
+      "id": "56836f4d-4995-4387-acb0-187bb5de4f47",
+      "name": "Dream",
+      "description": "(only with long rest)\na dream like place, full of mysteries"
+    },
+    {
+      "id": "6a2df88d-f9a6-41e7-b59b-30329ae86282",
+      "name": "Shadow Peak",
+      "description": "(a1)\na quiet and somewhat peaceful area. here many shadows appear to hang around."
+    }
+  ],
+  "objectPresets": {
+    "wall": {
+      "name": "wall",
+      "color": "#000000",
+      "size": "big",
+      "form": "square"
+    }
+  },
+  "board": {
+    "tokens": [
+      {
+        "id": "747fc83c-7b0f-409d-af31-6da50793e7cd",
+        "name": "robbit",
+        "color": "#4e0404",
+        "x": 5,
+        "y": 7,
+        "direction": 0,
+        "conditions": [],
+        "initBonus": 2,
+        "startX": 5,
+        "startY": 7,
+        "turnStartX": 5,
+        "turnStartY": 7,
+        "tokenSize": "fat"
+      },
+      {
+        "id": "25192e4b-929f-47c5-81e7-0e9b4fa6ff3f",
+        "name": "haraki",
+        "color": "#eeff00",
+        "x": 5,
+        "y": 12,
+        "direction": 0,
+        "conditions": [],
+        "initBonus": 2,
+        "startX": 5,
+        "startY": 12,
+        "turnStartX": 5,
+        "turnStartY": 12,
+        "tokenSize": "default"
+      },
+      {
+        "id": "30b444c3-5df2-425b-a4db-b2a26f39ff28",
+        "name": "don key",
+        "color": "#1100ff",
+        "x": 3,
+        "y": 11,
+        "direction": 0,
+        "conditions": [],
+        "initBonus": 2,
+        "startX": 3,
+        "startY": 11,
+        "turnStartX": 3,
+        "turnStartY": 11,
+        "tokenSize": "default"
+      },
+      {
+        "id": "43e10d6b-63ab-4a6a-bed0-e81811cc757d",
+        "name": "astolfo",
+        "color": "#ff00e1",
+        "x": 3,
+        "y": 12,
+        "direction": 0,
+        "conditions": [],
+        "initBonus": 2,
+        "startX": 3,
+        "startY": 12,
+        "turnStartX": 3,
+        "turnStartY": 12,
+        "tokenSize": "small"
+      },
+      {
+        "id": "707f70d9-288c-4d13-adb4-bf4337e81965",
+        "name": "eric",
+        "color": "#11ff00",
+        "x": 3,
+        "y": 8,
+        "direction": 0,
+        "conditions": [],
+        "initBonus": 5,
+        "startX": 3,
+        "startY": 8,
+        "turnStartX": 3,
+        "turnStartY": 8,
+        "tokenSize": "small"
+      }
+    ],
+    "objects": [],
+    "initiative": [],
+    "currentTurn": 0,
+    "combatStarted": false,
+    "grid": {}
+  }
+}
