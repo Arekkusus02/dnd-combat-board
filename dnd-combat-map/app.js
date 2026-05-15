@@ -256,7 +256,9 @@ function renderInitiative() {
   list.innerHTML = "";
 
   state.initiative.forEach((entry, i) => {
-    const token = state.tokens.find(t => t.id === entry.id);
+    const token = [...state.tokens]
+      .reverse()
+      .find(t => t.id === entry.id);
 
     const div = document.createElement("div");
     div.className = "initiativeRow";
@@ -368,14 +370,19 @@ canvas.addEventListener("mousedown", (e) => {
   const x = Math.floor(e.offsetX / state.grid);
   const y = Math.floor(e.offsetY / state.grid);
 
-  const token = state.tokens.find(t => t.x === x && t.y === y);
+  const token = [...state.tokens]
+    .reverse()
+    .find(t => t.x === x && t.y === y);
   if (token) {
     state.selected = token;
     state.movement.activeTokenId = token.id;
     return;
   }
 
-  const object = state.objects.find(o => o.x === x && o.y === y);
+  const object = [...state.objects]
+    .reverse()
+    .find(o => o.x === x && o.y === y);
+
   if (object) {
     state.selected = object;
     return;
@@ -465,8 +472,12 @@ canvas.addEventListener("contextmenu", (e) => {
   const gridX = Math.floor(e.offsetX / state.grid);
   const gridY = Math.floor(e.offsetY / state.grid);
 
-  const token = state.tokens.find(t => t.x === gridX && t.y === gridY);
-  const object = state.objects.find(o => o.x === gridX && o.y === gridY);
+  const token = [...state.tokens]
+    .reverse()
+    .find(t => t.x === gridX && t.y === gridY);
+  const object = [...state.objects]
+    .reverse()
+    .find(o => o.x === gridX && o.y === gridY);
 
   if (token) {
     // 🔴 HOLD SHIFT TO DELETE
@@ -507,7 +518,9 @@ canvas.addEventListener("dblclick", (e) => {
   const gridX = Math.floor(e.offsetX / state.grid);
   const gridY = Math.floor(e.offsetY / state.grid);
 
-  const token = state.tokens.find(t => t.x === gridX && t.y === gridY);
+  const token = [...state.tokens]
+    .reverse()
+    .find(t => t.x === gridX && t.y === gridY);
 
   if (!token) return;
 
@@ -524,6 +537,71 @@ canvas.addEventListener("dblclick", (e) => {
   }
 
   render();
+});
+
+// Shift + Left Click to copy token/object
+canvas.addEventListener("mousedown", (e) => {
+
+  // Shift + Left Click only
+  if (!e.shiftKey || e.button !== 0) return;
+
+  const gridX = Math.floor(e.offsetX / state.grid);
+  const gridY = Math.floor(e.offsetY / state.grid);
+
+  // Check token first
+  const token = [...state.tokens]
+    .reverse()
+    .find(t => t.x === gridX && t.y === gridY);
+
+  if (token) {
+
+    copyToken(token);
+
+    render();
+
+    return;
+  }
+
+  // Check objects
+  const object = [...state.objects]
+    .reverse()
+    .find(o => o.x === gridX && o.y === gridY);
+
+  if (object) {
+
+    copyObject(object);
+
+    render();
+  }
+
+});
+
+// Ctrl + Left Click to bring token/object to front
+canvas.addEventListener("mousedown", (e) => {
+
+  if (!e.ctrlKey || e.button !== 0) return;
+
+  const gridX = Math.floor(e.offsetX / state.grid);
+  const gridY = Math.floor(e.offsetY / state.grid);
+
+  const token = [...state.tokens]
+    .reverse()
+    .find(t => t.x === gridX && t.y === gridY);
+
+  const object = [...state.objects]
+    .reverse()
+    .find(o => o.x === gridX && o.y === gridY);
+
+  if (token) {
+    bringTokenToFront(token);
+    render();
+    return;
+  }
+
+  if (object) {
+    bringObjectToFront(object);
+    render();
+  }
 });
 
 function drawEntities() {
@@ -2409,6 +2487,65 @@ function drawTutorialIcon() {
   ctx.arc(size / 2, size * 0.75, size * 0.08, 0, Math.PI * 2);
   ctx.fill();
 };
+
+// Token Duplication
+function copyToken(token) {
+
+  const newName = prompt(
+    "Enter name for copied token:",
+    token.name + " Copy"
+  );
+
+  if (newName === null) return;
+
+  const copiedToken = {
+
+    ...token,
+
+    id: crypto.randomUUID(),
+
+    name: newName.trim() || (token.name + " Copy"),
+
+    x: token.x,
+    y: token.y
+  };
+
+  state.tokens.push(copiedToken);
+
+  render();
+}
+
+// Object Duplication
+function copyObject(object) {
+
+  const copiedObject = {
+
+    ...object,
+
+    id: crypto.randomUUID(),
+
+    name: object.name + " Copy",
+
+    x: object.x,
+    y: object.y
+  };
+
+  state.objects.push(copiedObject);
+
+  render();
+}
+
+// Bring token to front when selected
+function bringTokenToFront(token) {
+  state.tokens = state.tokens.filter(t => t.id !== token.id);
+  state.tokens.push(token);
+}
+
+// Bring object to front when selected
+function bringObjectToFront(object) {
+  state.objects = state.objects.filter(o => o.id !== object.id);
+  state.objects.push(object);
+}
 
 // Initialize item definitions if none exist
 if (!localStorage.getItem("itemDefinitions")) {
