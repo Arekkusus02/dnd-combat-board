@@ -241,13 +241,16 @@ body {
 
 /*🎲INITIATIVE PANEL */
 #initiativePanel {
-  flex: 0 0 min(20%, 16rem);
-  width: 100%;
-  max-width: min(20%, 16rem);
+  position: fixed;
+  top: 50%;
+  right: 1.5rem;
+  transform: translateY(-50%);
+  width: 18rem;
+  max-height: 75vh;
   background: #d3d3d3;
   padding: 1rem;
   overflow-y: auto;
-  align-self: center;
+  z-index: 9;
 }
 
 /*INITIATIVE TABLE STYLE */

@@ -69,6 +69,19 @@ function applyGridDimensions() {
   canvas.height = dims.canvasHeight;
 }
 
+function getGridPositionFromEvent(e) {
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+  let x = Math.floor((e.clientX - rect.left) * scaleX / state.grid);
+  let y = Math.floor((e.clientY - rect.top) * scaleY / state.grid);
+  const maxX = Math.max(0, Math.floor(canvas.width / state.grid) - 1);
+  const maxY = Math.max(0, Math.floor(canvas.height / state.grid) - 1);
+  x = Math.min(Math.max(x, 0), maxX);
+  y = Math.min(Math.max(y, 0), maxY);
+  return { x, y, scaleX, scaleY };
+}
+
 function updateGridButtonStates() {
   const canEdit = state.tokens.length === 0 && !state.combatStarted;
   editGridLength.disabled = !canEdit;
@@ -344,6 +357,26 @@ initiativeRoll.onclick = () => {
   render();
 };
 
+function rerollInitiativeForToken(tokenId) {
+  const initiativeEntry = state.initiative.find(entry => entry.id === tokenId);
+  if (!initiativeEntry) return;
+
+  const newRoll = Math.floor(Math.random() * 20) + 1;
+  initiativeEntry.roll = newRoll;
+  initiativeEntry.value = newRoll + initiativeEntry.bonus;
+
+  const activeId = state.movement.activeTokenId;
+
+  state.initiative.sort((a, b) => b.value - a.value);
+  state.currentTurn = Math.max(0, state.initiative.findIndex(entry => entry.id === activeId));
+  if (state.currentTurn === -1) {
+    state.currentTurn = 0;
+    state.movement.activeTokenId = state.initiative[0]?.id ?? null;
+  }
+
+  render();
+}
+
 nextTurn.onclick = () => {
   if (state.initiative.length === 0) return;
 
@@ -367,12 +400,18 @@ nextTurn.onclick = () => {
 };
 
 canvas.addEventListener("mousedown", (e) => {
-  const x = Math.floor(e.offsetX / state.grid);
-  const y = Math.floor(e.offsetY / state.grid);
+  const { x, y } = getGridPositionFromEvent(e);
 
   const token = [...state.tokens]
     .reverse()
     .find(t => t.x === x && t.y === y);
+
+  if (token && e.button === 1) {
+    e.preventDefault();
+    rerollInitiativeForToken(token.id);
+    return;
+  }
+
   if (token) {
     state.selected = token;
     state.movement.activeTokenId = token.id;
@@ -389,11 +428,10 @@ canvas.addEventListener("mousedown", (e) => {
   }
 });
 
-canvas.addEventListener("mousemove", (e) => {
+canvas.addEventListener("pointermove", (e) => {
   if (!state.selected) return;
 
-  const x = Math.floor(e.offsetX / state.grid);
-  const y = Math.floor(e.offsetY / state.grid);
+  const { x, y } = getGridPositionFromEvent(e);
 
   state.selected.x = x;
   state.selected.y = y;
@@ -402,13 +440,43 @@ canvas.addEventListener("mousemove", (e) => {
   if (state.tokens.includes(state.selected)) {
     const dx = x - state.selected.turnStartX;
     const dy = y - state.selected.turnStartY;
-    state.movement.used = (Math.abs(dx) + Math.abs(dy)) * 5;
+    const steps = Math.max(Math.abs(dx), Math.abs(dy));
+    state.movement.used = steps * 5;
   }
 
   render();
 });
 
-canvas.addEventListener("mouseup", () => {
+canvas.addEventListener("pointerup", () => {
+  state.selected = null;
+});
+
+document.addEventListener("mouseup", () => {
+  state.selected = null;
+});
+
+canvas.addEventListener("mouseleave", () => {
+  state.selected = null;
+});
+
+canvas.addEventListener("pointerdown", (e) => {
+  if (e.pointerId != null) {
+    canvas.setPointerCapture(e.pointerId);
+  }
+});
+
+canvas.addEventListener("pointerup", (e) => {
+  state.selected = null;
+  if (e.pointerId != null) {
+    canvas.releasePointerCapture(e.pointerId);
+  }
+});
+
+document.addEventListener("pointerup", () => {
+  state.selected = null;
+});
+
+canvas.addEventListener("pointercancel", () => {
   state.selected = null;
 });
 
@@ -469,8 +537,7 @@ function drawSight(token) {
 canvas.addEventListener("contextmenu", (e) => {
   e.preventDefault();
 
-  const gridX = Math.floor(e.offsetX / state.grid);
-  const gridY = Math.floor(e.offsetY / state.grid);
+  const { x: gridX, y: gridY, scaleX, scaleY } = getGridPositionFromEvent(e);
 
   const token = [...state.tokens]
     .reverse()
@@ -499,8 +566,10 @@ canvas.addEventListener("contextmenu", (e) => {
 
     // 🟢 otherwise rotate (normal behavior)
 
-    const dx = e.offsetX - (token.x * state.grid + state.grid / 2);
-    const dy = e.offsetY - (token.y * state.grid + state.grid / 2);
+    const offsetX = (e.clientX - canvas.getBoundingClientRect().left) * scaleX;
+    const offsetY = (e.clientY - canvas.getBoundingClientRect().top) * scaleY;
+    const dx = offsetX - (token.x * state.grid + state.grid / 2);
+    const dy = offsetY - (token.y * state.grid + state.grid / 2);
 
     token.direction = Math.atan2(dy, dx);
 
@@ -515,8 +584,7 @@ canvas.addEventListener("contextmenu", (e) => {
 });
 
 canvas.addEventListener("dblclick", (e) => {
-  const gridX = Math.floor(e.offsetX / state.grid);
-  const gridY = Math.floor(e.offsetY / state.grid);
+  const { x: gridX, y: gridY } = getGridPositionFromEvent(e);
 
   const token = [...state.tokens]
     .reverse()
@@ -545,8 +613,7 @@ canvas.addEventListener("mousedown", (e) => {
   // Shift + Left Click only
   if (!e.shiftKey || e.button !== 0) return;
 
-  const gridX = Math.floor(e.offsetX / state.grid);
-  const gridY = Math.floor(e.offsetY / state.grid);
+  const { x: gridX, y: gridY } = getGridPositionFromEvent(e);
 
   // Check token first
   const token = [...state.tokens]
@@ -581,8 +648,7 @@ canvas.addEventListener("mousedown", (e) => {
 
   if (!e.ctrlKey || e.button !== 0) return;
 
-  const gridX = Math.floor(e.offsetX / state.grid);
-  const gridY = Math.floor(e.offsetY / state.grid);
+  const { x: gridX, y: gridY } = getGridPositionFromEvent(e);
 
   const token = [...state.tokens]
     .reverse()
